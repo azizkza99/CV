@@ -27,4 +27,4 @@ npm audit --audit-level=high
 
 ## Privacy
 
-The public portfolio intentionally omits national ID, date of birth, nationality, and work-permit details. Contact is limited to professional channels already supplied by the owner.
+The public portfolio intentionally omits the profile photograph, national ID, date of birth, nationality, and work-permit details. Contact is limited to professional channels already supplied by the owner.

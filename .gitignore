@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.lo-profile/
+output-docx/
+*.log
+.DS_Store
