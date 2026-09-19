@@ -240,6 +240,8 @@ def build_resume(data, filename, rtl=False):
     add_section(doc, data["education_heading"], rtl=rtl)
     add_paragraph(doc, data["degree"], style="Role Heading", rtl=rtl, size=9 if rtl else 9.8, bold=True)
     add_paragraph(doc, data["education_meta"], style="Meta", rtl=rtl, size=7.5 if rtl else 8.2, color=MUTED)
+    if data.get("education_extra"):
+        add_paragraph(doc, data["education_extra"], style="Meta", rtl=rtl, size=7.3 if rtl else 7.8, color=MUTED)
 
     add_section(doc, data["academic_heading"], rtl=rtl)
     for item in data["academic"]:
@@ -262,9 +264,9 @@ def build_resume(data, filename, rtl=False):
 
 EN = {
     "name": "Abdelaziz Abuthuraya",
-    "title": "Industrial Engineer & Digital Systems Developer",
-    "contact": ["Jeddah, Saudi Arabia", "azizkza99@gmail.com", "+966 54 994 9023", "linkedin.com/in/abdelazizabuthuraya", "github.com/azizkza99"],
-    "summary": "Industrial Engineering graduate with hands-on experience in production planning, process improvement, quality, and supply-chain analysis across manufacturing and EPC environments in Saudi Arabia and Türkiye. Combines engineering thinking with Arabic-first web systems built using React, TypeScript, Supabase, and Three.js. Trilingual in Arabic, English, and Turkish.",
+    "title": "Industrial Engineer | Production Planning & Process Improvement",
+    "contact": ["Jeddah, Saudi Arabia", "azizkza99@gmail.com", "+966 54 994 9023", "linkedin.com/in/abdelazizabuthuraya", "github.com/azizkza99", "cv-ruby-two.vercel.app"],
+    "summary": "Industrial Engineering graduate with approximately 14 months of internship experience in production planning, manufacturing operations, quality inspection, process improvement, supply-chain analysis, and EPC coordination across Saudi Arabia and Türkiye. Complements this foundation by building bilingual digital systems using React, TypeScript, Supabase, and Three.js.",
     "experience_heading": "PROFESSIONAL EXPERIENCE",
     "experience": [
         {"role": "Production Planning Intern", "company": "EDAS Yatak", "place": "Kayseri, Türkiye", "date": "Aug 2025 - Oct 2025", "bullets": ["Prepared and monitored daily production schedules, coordinating across departments to keep workflow aligned with delivery priorities.", "Reviewed production-performance data to identify bottlenecks and translate findings into practical workflow improvements.", "Applied production-planning and industrial-engineering principles to improve task sequencing and process organization."]},
@@ -281,6 +283,7 @@ EN = {
     "education_heading": "EDUCATION",
     "degree": "BSc in Industrial Engineering - Üsküdar University",
     "education_meta": "Istanbul, Türkiye | 2020 - 2024 | GPA: 2.75 / 4.00",
+    "education_extra": "Graduate coursework (one semester) - Abdullah Gül University | Jan - May 2026 | No degree awarded",
     "academic_heading": "ACADEMIC ENGINEERING PROJECTS",
     "academic": ["Workforce planning: designed and analysed a 14-question survey across eight companies covering selection, development, and succession planning.", "Supply chain and revenue: analysed 85% machine utilisation and waste rates of 0.5-1.5% to identify operational improvement opportunities.", "Virtual machine placement: built a QoS- and SLA-constrained MIP model that achieved a zero optimality gap in the tested scenarios."],
     "skills_heading": "SKILLS",
@@ -290,9 +293,9 @@ EN = {
 
 AR = {
     "name": "عبد العزيز أبو ثريا",
-    "title": "مهندس صناعي ومطور أنظمة رقمية",
-    "contact": ["جدة، المملكة العربية السعودية", "azizkza99@gmail.com", "+966 54 994 9023", "linkedin.com/in/abdelazizabuthuraya", "github.com/azizkza99"],
-    "summary": "مهندس صناعي بخبرة ميدانية في تخطيط الإنتاج، وتحسين العمليات، والجودة، وتحليل سلاسل الإمداد ضمن بيئات تصنيع ومشاريع في السعودية وتركيا. أدمج التفكير الهندسي مع تطوير أنظمة عربية أولًا باستخدام React وTypeScript وSupabase وThree.js. اللغات: العربية (الأم)، الإنجليزية (C1)، والتركية (B1).",
+    "title": "مهندس صناعي | تخطيط الإنتاج وتحسين العمليات",
+    "contact": ["جدة، المملكة العربية السعودية", "azizkza99@gmail.com", "+966 54 994 9023", "linkedin.com/in/abdelazizabuthuraya", "github.com/azizkza99", "cv-ruby-two.vercel.app"],
+    "summary": "مهندس صناعي بخبرة تدريبية تقارب 14 شهرًا في تخطيط الإنتاج وعمليات التصنيع وفحص الجودة وتحسين العمليات وتحليل سلاسل الإمداد وتنسيق مشاريع EPC في السعودية وتركيا. أدعم هذا الأساس ببناء أنظمة رقمية ثنائية اللغة باستخدام React وTypeScript وSupabase وThree.js.",
     "experience_heading": "الخبرة المهنية",
     "experience": [
         {"role": "متدرب تخطيط إنتاج", "company": "EDAS Yatak", "place": "قيصري، تركيا", "date": "أغسطس 2025 - أكتوبر 2025", "bullets": ["إعداد ومتابعة جداول الإنتاج اليومية والتنسيق بين الأقسام للحفاظ على تدفق العمل وربط الأولويات بمواعيد التسليم.", "تحليل بيانات الأداء لتحديد الاختناقات وتحويل النتائج إلى مقترحات عملية لتحسين تنظيم العمليات.", "تطبيق مبادئ تخطيط الإنتاج والهندسة الصناعية لتحسين تسلسل المهام ووضوح سير العمل."]},
@@ -309,6 +312,7 @@ AR = {
     "education_heading": "التعليم",
     "degree": "بكالوريوس الهندسة الصناعية - Üsküdar University",
     "education_meta": "إسطنبول، تركيا | 2020 - 2024 | المعدل: 2.75 / 4.00",
+    "education_extra": "مقررات دراسات عليا (فصل واحد) - Abdullah Gül University | يناير - مايو 2026 | لم تُمنح درجة علمية",
     "academic_heading": "مشاريع هندسية أكاديمية",
     "academic": ["تخطيط الموارد البشرية: تصميم وتحليل استبيان من 14 سؤالًا عبر 8 شركات لدراسة الاختيار والتطوير والتعاقب الوظيفي.", "سلسلة الإمداد والإيرادات: تحليل استخدام الآلات بنسبة 85% ومعدلات هدر بين 0.5% و1.5% لتحديد فرص التحسين.", "توزيع الأجهزة الافتراضية: بناء نموذج MIP تحت قيود QoS وSLA وتحقيق حلول مثالية بفجوة مثالية صفرية في السيناريوهات المختبرة."],
     "skills_heading": "المهارات",

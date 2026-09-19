@@ -3,10 +3,14 @@ import { content, shared } from './content'
 
 function getInitialLanguage() {
   try {
-    return window.localStorage.getItem('portfolio-language:v2') === 'en' ? 'en' : 'ar'
+    return window.localStorage.getItem('portfolio-language:v3') === 'ar' ? 'ar' : 'en'
   } catch {
-    return 'ar'
+    return 'en'
   }
+}
+
+function updateMeta(selector, value) {
+  document.querySelector(selector)?.setAttribute('content', value)
 }
 
 function ArrowIcon() {
@@ -52,9 +56,13 @@ export default function App() {
     document.documentElement.lang = language
     document.documentElement.dir = isArabic ? 'rtl' : 'ltr'
     document.title = copy.meta.title
-    document.querySelector('meta[name="description"]')?.setAttribute('content', copy.meta.description)
+    updateMeta('meta[name="description"]', copy.meta.description)
+    updateMeta('meta[property="og:title"]', copy.meta.title)
+    updateMeta('meta[property="og:description"]', copy.meta.description)
+    updateMeta('meta[name="twitter:title"]', copy.meta.title)
+    updateMeta('meta[name="twitter:description"]', copy.meta.description)
     try {
-      window.localStorage.setItem('portfolio-language:v2', language)
+      window.localStorage.setItem('portfolio-language:v3', language)
     } catch {
       // Language persistence is optional.
     }
@@ -92,9 +100,10 @@ export default function App() {
               <a className="button secondary" href={copy.downloadHref} download>{copy.download}<DownloadIcon /></a>
             </div>
             <div className="social-row">
-              <a href={shared.linkedin} target="_blank" rel="noreferrer">LinkedIn<ArrowIcon /></a>
-              <a href={shared.github} target="_blank" rel="noreferrer">GitHub<ArrowIcon /></a>
+              <a href={shared.linkedin} target="_blank" rel="me noreferrer">LinkedIn<ArrowIcon /></a>
+              <a href={shared.github} target="_blank" rel="me noreferrer">GitHub<ArrowIcon /></a>
               <a href={`mailto:${shared.email}`}>{shared.email}</a>
+              <a href={shared.phoneHref}>{shared.phone}</a>
             </div>
           </div>
 
@@ -159,8 +168,8 @@ export default function App() {
                       <h3>{projectCopy.title}</h3><p>{projectCopy.description}</p>
                       <div className="tags">{project.stack.map((item) => <span key={item}>{item}</span>)}</div>
                       <div className="project-links">
-                        <a href={project.live} target="_blank" rel="noreferrer">{copy.visit}<ArrowIcon /></a>
-                        {project.repo && <a href={project.repo} target="_blank" rel="noreferrer">{copy.source}<ArrowIcon /></a>}
+                        <a href={project.live} target="_blank" rel="noreferrer" aria-label={`${copy.visit}: ${projectCopy.title}`}>{copy.visit}<ArrowIcon /></a>
+                        {project.repo && <a href={project.repo} target="_blank" rel="noreferrer" aria-label={`${copy.source}: ${projectCopy.title}`}>{copy.source}<ArrowIcon /></a>}
                       </div>
                     </div>
                   </article>
@@ -183,10 +192,14 @@ export default function App() {
           <div className="section-shell">
             <SectionHeading number="05" eyebrow={copy.sectionEyebrows.education}>{copy.sections.education}</SectionHeading>
             <div className="education-grid">
-              <article className="degree-card">
-                <span className="degree-date">{copy.education.date}</span><h3>{copy.education.degree}</h3>
-                <strong>{copy.education.school}</strong><span>{copy.education.place}</span><p>{copy.education.detail}</p>
-              </article>
+              <div className="education-list">
+                {copy.education.map((item, index) => (
+                  <article className={`degree-card${index ? ' degree-card-secondary' : ''}`} key={`${item.school}-${item.date}`}>
+                    <span className="degree-date">{item.date}</span><h3>{item.degree}</h3>
+                    <strong>{item.school}</strong><span>{item.place}</span><p>{item.detail}</p>
+                  </article>
+                ))}
+              </div>
               <div className="academic-grid">
                 {copy.academic.map((item, index) => (
                   <article key={item.title}><span>0{index + 1}</span><div><h3>{item.title}</h3><p>{item.description}</p></div></article>
@@ -201,8 +214,9 @@ export default function App() {
         <div><p className="footer-kicker">{copy.footerKicker}</p><h2>{copy.footer}</h2></div>
         <div className="footer-actions">
           <a className="button light" href={`mailto:${shared.email}`}>{copy.contact}<ArrowIcon /></a>
-          <a href={shared.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-          <a href={shared.github} target="_blank" rel="noreferrer">GitHub</a>
+          <a href={shared.phoneHref}>{shared.phone}</a>
+          <a href={shared.linkedin} target="_blank" rel="me noreferrer">LinkedIn</a>
+          <a href={shared.github} target="_blank" rel="me noreferrer">GitHub</a>
         </div>
         <span className="copyright">© 2026 {copy.name}</span>
       </footer>

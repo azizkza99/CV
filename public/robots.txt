@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://cv-ruby-two.vercel.app/sitemap.xml
