@@ -32,7 +32,7 @@ const shared = {
     {
       id: 'afoq',
       repo: 'https://github.com/azizkza99/afoq-landing-page',
-      live: 'https://afoq-landing-page.vercel.app',
+      live: 'https://afoq-landing-page-alpha.vercel.app',
       stack: ['React', 'JavaScript', 'Tailwind CSS', 'Vite'],
     },
     {

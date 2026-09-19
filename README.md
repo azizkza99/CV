@@ -32,7 +32,7 @@ This project presents verified experience, technical case studies, and downloada
 - [Kayan — Workflow Discovery & Inquiry System](https://kayan-app-henna.vercel.app/)
 - [ECLIPSE — Specialty Coffee Experience](https://eclipse-luxury-experience.vercel.app/)
 - [Aether OS — Browser Desktop Environment](https://aether-os-seven-kappa.vercel.app/)
-- [AFOQ — Arabic-First Studio Experience](https://afoq-landing-page.vercel.app/)
+- [AFOQ — Arabic-First Studio Experience](https://afoq-landing-page-alpha.vercel.app/)
 - [Nexus AI — Product Planning Workspace](https://nexus-ai-rho-two.vercel.app/)
 
 ## Setup
