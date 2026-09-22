@@ -1,5 +1,5 @@
 const shared = {
-  email: 'azizkza99@gmail.com',
+  email: 'aziz.kza99@gmail.com',
   phone: '+966 54 994 9023',
   phoneHref: 'tel:+966549949023',
   linkedin: 'https://www.linkedin.com/in/abdelazizabuthuraya',

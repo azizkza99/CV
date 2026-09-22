@@ -47,8 +47,8 @@ def configure_document(doc, rtl=False):
     section = doc.sections[0]
     section.page_width = Inches(8.27)
     section.page_height = Inches(11.69)
-    section.top_margin = Inches(0.48)
-    section.bottom_margin = Inches(0.45)
+    section.top_margin = Inches(0.40)
+    section.bottom_margin = Inches(0.24)
     section.left_margin = Inches(0.58)
     section.right_margin = Inches(0.58)
 
@@ -56,10 +56,10 @@ def configure_document(doc, rtl=False):
     normal.font.name = "Arial"
     normal._element.rPr.rFonts.set(qn("w:eastAsia"), "Arial")
     normal._element.rPr.rFonts.set(qn("w:cs"), "Arial")
-    normal.font.size = Pt(9.3)
+    normal.font.size = Pt(9.1)
     normal.font.color.rgb = RGBColor.from_string(NAVY)
-    normal.paragraph_format.space_after = Pt(2.5)
-    normal.paragraph_format.line_spacing = 1.05
+    normal.paragraph_format.space_after = Pt(2.1)
+    normal.paragraph_format.line_spacing = 1.02
 
     for style_name in ["Title", "Subtitle", "Section Heading", "Role Heading", "Meta"]:
         if style_name not in doc.styles:
@@ -77,15 +77,15 @@ def configure_document(doc, rtl=False):
     subtitle.font.size = Pt(11.5)
     subtitle.font.bold = True
     subtitle.font.color.rgb = RGBColor.from_string(ACCENT)
-    subtitle.paragraph_format.space_after = Pt(6)
+    subtitle.paragraph_format.space_after = Pt(4)
 
     heading = doc.styles["Section Heading"]
     heading.font.name = "Arial"
     heading.font.size = Pt(11)
     heading.font.bold = True
     heading.font.color.rgb = RGBColor.from_string(NAVY)
-    heading.paragraph_format.space_before = Pt(8)
-    heading.paragraph_format.space_after = Pt(4)
+    heading.paragraph_format.space_before = Pt(6)
+    heading.paragraph_format.space_after = Pt(3)
     heading.paragraph_format.keep_with_next = True
     borders = OxmlElement("w:pBdr")
     bottom = OxmlElement("w:bottom")
@@ -101,7 +101,7 @@ def configure_document(doc, rtl=False):
     role.font.size = Pt(9.8)
     role.font.bold = True
     role.font.color.rgb = RGBColor.from_string(NAVY)
-    role.paragraph_format.space_before = Pt(4)
+    role.paragraph_format.space_before = Pt(3)
     role.paragraph_format.space_after = Pt(0)
     role.paragraph_format.keep_with_next = True
 
@@ -113,8 +113,8 @@ def configure_document(doc, rtl=False):
     meta.paragraph_format.keep_with_next = True
 
     if rtl:
-        section.top_margin = Inches(0.34)
-        section.bottom_margin = Inches(0.32)
+        section.top_margin = Inches(0.25)
+        section.bottom_margin = Inches(0.12)
         section.left_margin = Inches(0.48)
         section.right_margin = Inches(0.48)
         styles = [normal, title, subtitle, heading, role, meta]
@@ -146,15 +146,15 @@ def add_bullet(doc, text, rtl=False):
     paragraph.paragraph_format.left_indent = Inches(0 if rtl else 0.14)
     paragraph.paragraph_format.right_indent = Inches(0.14 if rtl else 0)
     paragraph.paragraph_format.first_line_indent = Inches(-0.12 if not rtl else 0)
-    paragraph.paragraph_format.space_after = Pt(0.6 if rtl else 1.4)
-    paragraph.paragraph_format.line_spacing = 0.96 if rtl else 1.02
+    paragraph.paragraph_format.space_after = Pt(0.5 if rtl else 0.9)
+    paragraph.paragraph_format.line_spacing = 0.95 if rtl else 1.0
     if rtl:
         set_paragraph_bidi(paragraph)
         prefix = "• "
     else:
         prefix = "• "
     run = paragraph.add_run(prefix + text)
-    set_run_font(run, size=7.9 if rtl else 8.8)
+    set_run_font(run, size=7.5 if rtl else 8.8)
 
 
 def add_header(doc, data, rtl=False):
@@ -181,13 +181,13 @@ def add_header(doc, data, rtl=False):
     p.alignment = WD_ALIGN_PARAGRAPH.RIGHT if rtl else WD_ALIGN_PARAGRAPH.LEFT
     if rtl:
         set_paragraph_bidi(p)
-    set_run_font(p.add_run(data["name"]), size=24, bold=True)
+    set_run_font(p.add_run(data["name"]), size=23 if rtl else 24, bold=True)
 
     p = main_cell.add_paragraph(style="Subtitle")
     p.alignment = WD_ALIGN_PARAGRAPH.RIGHT if rtl else WD_ALIGN_PARAGRAPH.LEFT
     if rtl:
         set_paragraph_bidi(p)
-    set_run_font(p.add_run(data["title"]), size=11.5, bold=True, color=ACCENT)
+    set_run_font(p.add_run(data["title"]), size=10.8 if rtl else 11.5, bold=True, color=ACCENT)
 
     p = contact_cell.paragraphs[0]
     first_is_arabic = any("\u0600" <= char <= "\u06ff" for char in data["contact"][0])
@@ -206,28 +206,28 @@ def add_header(doc, data, rtl=False):
 
 
 def add_section(doc, title, rtl=False):
-    return add_paragraph(doc, title, style="Section Heading", rtl=rtl, size=10 if rtl else 11, bold=True)
+    return add_paragraph(doc, title, style="Section Heading", rtl=rtl, size=9.6 if rtl else 11, bold=True)
 
 
 def add_experience(doc, item, rtl=False):
-    add_paragraph(doc, f'{item["role"]} | {item["company"]}', style="Role Heading", rtl=rtl, size=9 if rtl else 9.8, bold=True)
-    add_paragraph(doc, f'{item["place"]} | {item["date"]}', style="Meta", rtl=rtl, size=7.5 if rtl else 8.2, color=MUTED)
+    add_paragraph(doc, f'{item["role"]} | {item["company"]}', style="Role Heading", rtl=rtl, size=8.7 if rtl else 9.8, bold=True)
+    add_paragraph(doc, f'{item["place"]} | {item["date"]}', style="Meta", rtl=rtl, size=7.2 if rtl else 8.2, color=MUTED)
     for bullet in item["bullets"]:
         add_bullet(doc, bullet, rtl=rtl)
 
 
 def add_project(doc, item, rtl=False):
-    add_paragraph(doc, item["title"], style="Role Heading", rtl=rtl, size=9 if rtl else 9.8, bold=True)
-    add_paragraph(doc, item["stack"], style="Meta", rtl=rtl, size=7.5 if rtl else 8.2, color=ACCENT)
+    add_paragraph(doc, item["title"], style="Role Heading", rtl=rtl, size=8.7 if rtl else 9.8, bold=True)
+    add_paragraph(doc, item["stack"], style="Meta", rtl=rtl, size=7.2 if rtl else 8.2, color=ACCENT)
     add_bullet(doc, item["description"], rtl=rtl)
-    add_paragraph(doc, item["link"], style="Meta", rtl=rtl, size=7.3 if rtl else 7.8, color=MUTED)
+    add_paragraph(doc, item["link"], style="Meta", rtl=rtl, size=7 if rtl else 7.8, color=MUTED)
 
 
 def build_resume(data, filename, rtl=False):
     doc = Document()
     configure_document(doc, rtl=rtl)
     add_header(doc, data, rtl=rtl)
-    add_paragraph(doc, data["summary"], rtl=rtl, size=8.4 if rtl else 9.4, space_after=2 if rtl else 4)
+    add_paragraph(doc, data["summary"], rtl=rtl, size=8.1 if rtl else 9.4, space_after=1.5 if rtl else 4)
 
     add_section(doc, data["experience_heading"], rtl=rtl)
     for item in data["experience"]:
@@ -238,10 +238,10 @@ def build_resume(data, filename, rtl=False):
         add_project(doc, project, rtl=rtl)
 
     add_section(doc, data["education_heading"], rtl=rtl)
-    add_paragraph(doc, data["degree"], style="Role Heading", rtl=rtl, size=9 if rtl else 9.8, bold=True)
-    add_paragraph(doc, data["education_meta"], style="Meta", rtl=rtl, size=7.5 if rtl else 8.2, color=MUTED)
+    add_paragraph(doc, data["degree"], style="Role Heading", rtl=rtl, size=8.7 if rtl else 9.8, bold=True)
+    add_paragraph(doc, data["education_meta"], style="Meta", rtl=rtl, size=7.2 if rtl else 8.2, color=MUTED)
     if data.get("education_extra"):
-        add_paragraph(doc, data["education_extra"], style="Meta", rtl=rtl, size=7.3 if rtl else 7.8, color=MUTED)
+        add_paragraph(doc, data["education_extra"], style="Meta", rtl=rtl, size=7 if rtl else 7.8, color=MUTED)
 
     add_section(doc, data["academic_heading"], rtl=rtl)
     for item in data["academic"]:
@@ -253,8 +253,8 @@ def build_resume(data, filename, rtl=False):
         paragraph.alignment = WD_ALIGN_PARAGRAPH.RIGHT if rtl else WD_ALIGN_PARAGRAPH.LEFT
         if rtl:
             set_paragraph_bidi(paragraph)
-        set_run_font(paragraph.add_run(label + ": "), size=7.9 if rtl else 8.8, bold=True, color=ACCENT)
-        set_run_font(paragraph.add_run(values), size=7.9 if rtl else 8.8)
+        set_run_font(paragraph.add_run(label + ": "), size=7.4 if rtl else 8.8, bold=True, color=ACCENT)
+        set_run_font(paragraph.add_run(values), size=7.4 if rtl else 8.8)
         paragraph.paragraph_format.space_after = Pt(2)
 
     path = OUTPUT / filename
@@ -265,7 +265,7 @@ def build_resume(data, filename, rtl=False):
 EN = {
     "name": "Abdelaziz Abuthuraya",
     "title": "Industrial Engineer | Production Planning & Process Improvement",
-    "contact": ["Jeddah, Saudi Arabia", "azizkza99@gmail.com", "+966 54 994 9023", "linkedin.com/in/abdelazizabuthuraya", "github.com/azizkza99", "cv-ruby-two.vercel.app"],
+    "contact": ["Jeddah, Saudi Arabia", "aziz.kza99@gmail.com", "+966 54 994 9023", "linkedin.com/in/abdelazizabuthuraya", "github.com/azizkza99", "cv-ruby-two.vercel.app"],
     "summary": "Industrial Engineering graduate with approximately 14 months of internship experience in production planning, manufacturing operations, quality inspection, process improvement, supply-chain analysis, and EPC coordination across Saudi Arabia and Türkiye. Complements this foundation by building bilingual digital systems using React, TypeScript, Supabase, and Three.js.",
     "experience_heading": "PROFESSIONAL EXPERIENCE",
     "experience": [
@@ -294,7 +294,7 @@ EN = {
 AR = {
     "name": "عبد العزيز أبو ثريا",
     "title": "مهندس صناعي | تخطيط الإنتاج وتحسين العمليات",
-    "contact": ["جدة، المملكة العربية السعودية", "azizkza99@gmail.com", "+966 54 994 9023", "linkedin.com/in/abdelazizabuthuraya", "github.com/azizkza99", "cv-ruby-two.vercel.app"],
+    "contact": ["جدة، المملكة العربية السعودية", "aziz.kza99@gmail.com", "+966 54 994 9023", "linkedin.com/in/abdelazizabuthuraya", "github.com/azizkza99", "cv-ruby-two.vercel.app"],
     "summary": "مهندس صناعي بخبرة تدريبية تقارب 14 شهرًا في تخطيط الإنتاج وعمليات التصنيع وفحص الجودة وتحسين العمليات وتحليل سلاسل الإمداد وتنسيق مشاريع EPC في السعودية وتركيا. أدعم هذا الأساس ببناء أنظمة رقمية ثنائية اللغة باستخدام React وTypeScript وSupabase وThree.js.",
     "experience_heading": "الخبرة المهنية",
     "experience": [
