@@ -26,6 +26,13 @@ This project presents verified experience, technical case studies, and downloada
 - Python-based resume document generator
 - Privacy-first design with no analytics, forms, cookies, or tracking
 
+## Project Structure
+
+- `src/content.js` is the shared source for Arabic and English portfolio copy.
+- `src/App.jsx` renders the sections, language switch, and CV download links.
+- `public/resumes/` contains the downloadable PDFs referenced by the site.
+- `scripts/generate_resumes.py` produces editable Word files in `output-docx/`; it does not regenerate the public PDFs automatically.
+
 ## Featured Work
 
 - [FORM — Interactive 3D Door Configurator](https://bezi-product-viewer.vercel.app/)
