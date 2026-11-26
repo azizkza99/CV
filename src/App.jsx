@@ -68,6 +68,24 @@ export default function App() {
     }
   }, [copy.meta.description, copy.meta.title, isArabic, language])
 
+  useEffect(() => {
+    const targets = document.querySelectorAll('.section-heading, .focus-grid article, .signal-grid, .experience-card, .project-card, .skills-grid article, .degree-card, .academic-grid article')
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible')
+          observer.unobserve(entry.target)
+        }
+      })
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 })
+    targets.forEach((element) => {
+      element.classList.add('reveal')
+      observer.observe(element)
+    })
+    return () => observer.disconnect()
+  }, [language])
+
   return (
     <>
       <a className="skip-link" href="#about">{copy.skip}</a>
@@ -109,9 +127,21 @@ export default function App() {
 
           <aside className="hero-dashboard" aria-label={copy.dashboardLabel}>
             <div className="dashboard-top"><span>IE / DIGITAL</span><span className="status"><i />{copy.status}</span></div>
-            <div className="dashboard-core">
-              <div className="core-ring"><strong>IE</strong><span>×</span><strong>DEV</strong></div>
-              <p>{copy.dashboardText}</p>
+            <div className="dashboard-now">
+              <p className="now-label">{copy.nowLabel}</p>
+              <ol>
+                {copy.now.map((item, index) => (
+                  <li key={item.title} className={index === 0 ? 'is-primary' : undefined}>
+                    <span className="now-dot" aria-hidden="true" />
+                    <div>
+                      <strong>{item.title}</strong>
+                      <span>{item.org}</span>
+                      <time>{item.date}</time>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              <p className="now-text">{copy.dashboardText}</p>
             </div>
             <div className="dashboard-grid">
               {copy.dashboardItems.map((item, index) => <div key={item}><span>0{index + 1}</span><strong>{item}</strong></div>)}
@@ -140,9 +170,12 @@ export default function App() {
             <SectionHeading number="02" eyebrow={copy.sectionEyebrows.experience}>{copy.sections.experience}</SectionHeading>
             <div className="timeline">
               {copy.experience.map((item, index) => (
-                <article className="experience-card" key={`${item.company}-${item.date}`}>
+                <article className={`experience-card${item.current ? ' is-current' : ''}`} key={`${item.company}-${item.date}`}>
                   <div className="experience-index">0{index + 1}</div>
-                  <div className="experience-meta"><time>{item.date}</time><span>{item.place}</span></div>
+                  <div className="experience-meta">
+                    {item.current && <span className="current-badge"><i />{copy.currentBadge}</span>}
+                    <time>{item.date}</time><span>{item.place}</span>
+                  </div>
                   <div className="experience-content">
                     <h3>{item.role}</h3><p className="company">{item.company}</p>
                     <ul>{item.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>

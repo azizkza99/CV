@@ -31,7 +31,8 @@ This project presents verified experience, technical case studies, and downloada
 - `src/content.js` is the shared source for Arabic and English portfolio copy.
 - `src/App.jsx` renders the sections, language switch, and CV download links.
 - `public/resumes/` contains the downloadable PDFs referenced by the site.
-- `scripts/generate_resumes.py` produces editable Word files in `output-docx/`; it does not regenerate the public PDFs automatically.
+- `scripts/build_cv_pdf.py` regenerates the one-page English and Arabic PDFs in `public/resumes/` (needs `npm ci` for fonts and Playwright).
+- `scripts/generate_resumes.py` produces editable Word files in `output-docx/`.
 
 ## Featured Work
 
